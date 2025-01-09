@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 interface UserAvatarProps {
@@ -6,23 +8,27 @@ interface UserAvatarProps {
 }
 
 export default function UserAvatar({ image, name }: UserAvatarProps) {
-  if (image) {
-    return (
-      <Image
-        src={image}
-        alt={`${name || "User"}'s profile`}
-        width={96}
-        height={96}
-        className="rounded-full mt-4"
-      />
-    );
-  }
+  return image ? <UseAvatar image={image} /> : <UnAvatar name={name} />;
+}
 
+const UseAvatar = ({ image }: UserAvatarProps) => {
   return (
-    <div className="w-24 h-24 rounded-full bg-black text-white flex items-center justify-center mt-4">
+    <Image
+      src={image || "/default-image.png"}
+      alt="User's profile"
+      width={48}
+      height={48}
+      className="rounded-full border border-gray-300"
+    />
+  );
+};
+
+const UnAvatar = ({ name }: UserAvatarProps) => {
+  return (
+    <div className="w-12 h-12 rounded-full bg-gray-700 text-white flex items-center justify-center">
       <span className="text-xl font-bold">
         {name?.charAt(0).toUpperCase() || "?"}
       </span>
     </div>
   );
-}
+};
