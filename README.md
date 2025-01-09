@@ -67,7 +67,7 @@
 
 ```sh
 git clone https://github.com/junsobi/passkey_nextAuth.git
-cd your-repo
+cd passkey_nextAuth
 ```
 
 2. 환경 변수 설정
