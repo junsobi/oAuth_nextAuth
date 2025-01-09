@@ -3,14 +3,13 @@
 import { useEffect } from "react";
 import { usePasskey } from "@/hooks/usePasskey";
 import { Button } from "@/components/ui/button";
-import { CardContent, CardFooter } from "@/components/ui/card";
 import LoadingIndicator from "@/components/ui/loading-indicator";
 
 interface PasskeyManagerProps {
   email: string;
 }
 
-export function PasskeyManager({ email }: PasskeyManagerProps) {
+export default function PasskeyManager({ email }: PasskeyManagerProps) {
   const {
     registered,
     loading,
@@ -24,73 +23,45 @@ export function PasskeyManager({ email }: PasskeyManagerProps) {
     checkRegistration();
   }, [checkRegistration]);
 
-  const passkeyContainerProps = {
-    registered,
-    loading,
-    onRegister: registerPasskey,
-    onDelete: deletePasskey,
-  };
-
   return (
-    <div className="w-full space-y-4">
-      <CardContent className="flex flex-col items-center space-y-2">
-        {loading && <LoadingIndicator message="Passkey 상태 확인 중..." />}
-        <PasskeyStatusContainer {...passkeyContainerProps} />
-      </CardContent>
+    <div className="flex flex-col h-12">
+      {loading && <LoadingIndicator message="Passkey 상태 확인 중..." />}
+      <Status
+        registered={registered}
+        loading={loading}
+        onRegister={registerPasskey}
+        onDelete={deletePasskey}
+      />
       {message && <MessageFooter message={message} />}
     </div>
   );
 }
 
-interface PasskeyStatusContainerProps {
+interface StatusProps {
   registered: boolean;
   loading: boolean;
   onRegister: () => void;
   onDelete: () => void;
 }
 
-function PasskeyStatusContainer({
-  registered,
-  loading,
-  onRegister,
-  onDelete,
-}: PasskeyStatusContainerProps) {
-  return registered ? (
-    <RegisteredStatus onDelete={onDelete} loading={loading} />
-  ) : (
-    <UnregisteredStatus onRegister={onRegister} loading={loading} />
-  );
-}
-
-interface RegisteredStatusProps {
-  onDelete: () => void;
-  loading: boolean;
-}
-
-function RegisteredStatus({ onDelete, loading }: RegisteredStatusProps) {
+function Status({ registered, loading, onRegister, onDelete }: StatusProps) {
   return (
-    <div className="text-center space-y-2">
-      <p className="text-green-500 font-medium">
-        Passkey가 활성화되어 있습니다.
+    <div className="flex items-center justify-between w-full">
+      <p
+        className={`text-base ${
+          registered ? "text-green-500" : "text-red-500"
+        }`}
+      >
+        {registered
+          ? "Passkey가 활성화되어 있습니다."
+          : "Passkey가 등록되지 않았습니다."}
       </p>
-      <Button variant="destructive" onClick={onDelete} disabled={loading}>
-        Passkey 삭제
-      </Button>
-    </div>
-  );
-}
-
-interface UnregisteredStatusProps {
-  onRegister: () => void;
-  loading: boolean;
-}
-
-function UnregisteredStatus({ onRegister, loading }: UnregisteredStatusProps) {
-  return (
-    <div className="text-center space-y-2">
-      <p className="text-red-500 font-medium">Passkey가 등록되지 않았습니다.</p>
-      <Button variant="default" onClick={onRegister} disabled={loading}>
-        Passkey 등록
+      <Button
+        variant={registered ? "destructive" : "default"}
+        onClick={registered ? onDelete : onRegister}
+        disabled={loading}
+      >
+        {registered ? "Passkey 삭제" : "Passkey 등록"}
       </Button>
     </div>
   );
@@ -102,8 +73,8 @@ interface MessageFooterProps {
 
 function MessageFooter({ message }: MessageFooterProps) {
   return (
-    <CardFooter>
+    <div>
       <p className="text-sm text-gray-600 text-center">{message}</p>
-    </CardFooter>
+    </div>
   );
 }

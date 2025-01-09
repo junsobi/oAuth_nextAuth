@@ -2,7 +2,7 @@
 
 import UserAvatar from "./_components/user-avatar";
 import SignOutButton from "./_components/sign-out-button";
-import { PasskeyManager } from "./_components/passkey-manager";
+import PasskeyManager from "./_components/passkey-manager";
 import { Session } from "next-auth";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
