@@ -1,5 +1,15 @@
 # 📘 NextAuth.js 기반 인증 연습 프로젝트
 
+
+![스크린샷 2025-01-09 11 20 09](https://github.com/user-attachments/assets/9806a9f0-19d5-4b14-aed3-3e75c186ff67)
+
+
+
+
+
+
+
+
 ## 🖥️ 프로젝트 소개
 
 이 프로젝트는 Next.js의 최신 인증 라이브러리인 [**Auth.js**](https://authjs.dev) (구 NextAuth.js)를 활용하여 로그인 및 세션 관리를 구현한 연습 목적의 프로젝트입니다. Google OAuth와 Passkey를 결합하여 **현대적이고 보안적인 인증 흐름**을 실험하고 연구하는 데 초점을 맞췄습니다.
