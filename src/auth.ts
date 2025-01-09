@@ -10,4 +10,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [Passkey, Google],
   experimental: { enableWebAuthn: true },
+  pages: {
+    signIn: "/",
+    signOut: "/",
+    error: "/",
+  },
 });
